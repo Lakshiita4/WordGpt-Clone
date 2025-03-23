@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordGPT | Your Ultimate Writing Companion</title>
+    <style>
+        :root {
+            --primary: #2a2d4f;
+            --secondary: #6c63ff;
+            --accent: #ff6b6b;
+            --light: #f9f9ff;
+            --dark: #1a1a2e;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.03) 10px,
+                rgba(255,255,255,0.03) 20px
+            );
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .typewriter {
+            position: relative;
+            display: inline-block;
+            color: var(--accent);
+        }
+        
+        /* Features */
+        .features {
+            padding: 4rem 2rem;
+            background-color: #0C0F27;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            margin: 0.5rem auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 4rem 2rem;
+            background-color: #0C0F27;
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            margin: 1rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+        
+        .step h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .steps::after {
+            content: "";
+            position: absolute;
+            top: 30px;
+            left: 25%;
+            right: 25%;
+            height: 3px;
+            background-color: var(--secondary);
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 2rem;
+            background-color: white;
+            
+        }
+        
+        .testimonial-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 2rem;
+            padding: 1rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            scrollbar-width: none;
+        }
+        
+        .testimonial-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .testimonial-card {
+            scroll-snap-align: start;
+            min-width: 300px;
+            flex: 1;
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            font-size: 5rem;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            color: var(--secondary);
+            opacity: 0.2;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 4rem 2rem;
+            background-color: var(--light);
+        }
+        
+        .pricing-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        
+        .pricing-card.popular {
+            border-top: 4px solid var(--accent);
+            position: relative;
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: #777;
+        }
+        
+        .plan-features {
+            margin-bottom: 2rem;
+            list-style: none;
+        }
+        
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .plan-features li::before {
+            content: "✓";
+            color: var(--success);
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .pricing-card .btn {
+            margin-top: auto;
+        }
+        
+        /* Blogs */
+        .blogs {
+            padding: 4rem 2rem;
+            background-color: white;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .blog-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        
+        .blog-image {
+            height: 200px;
+            width: 100%;
+            background-color: #ddd;
+        }
+        
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-tag {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .blog-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        
+        .blog-excerpt {
+            color: #555;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        .blog-meta img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        /* Contact */
+        .contact {
+            padding: 4rem 2rem;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .contact .section-title {
+            color: white;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .contact-form {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+        }
+        
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        .footer-col h3::after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            margin-top: 0.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* Unique Element: Floating Content Bubbles */
+        .content-bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .bubble {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-weight: 500;
+            color: white;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .bubble:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            left: 10%;
+            animation-duration: 18s;
+            animation-delay: 2s;
+        }
+        
+        .bubble:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 30%;
+            right: 15%;
+            animation-duration: 15s;
+            animation-delay: 1s;
+        }
+        
+        .bubble:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 25%;
+            left: 20%;
+            animation-duration: 20s;
+            animation-delay: 0s;
+        }
+        
+        .bubble:nth-child(4) {
+            width: 90px;
+            height: 90px;
+            bottom: 15%;
+            right: 25%;
+            animation-duration: 22s;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(8px) rotate(-5deg);
+            }
+            75% {
+                transform: translateY(-8px) rotate(3deg);
+            }
+        }
+        
+        /* Unique Element: Interactive Writing Tool Preview */
+        .tool-preview {
+            max-width: 800px;
+            margin: 3rem auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+        
+        .tool-header {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+        
+        .tool-tabs {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .tool-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tool-tab.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .tool-content {
+            min-height: 200px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .tool-placeholder {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: #aaa;
+            pointer-events: none;
+        }
+        
+        .tool-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 18px;
+            background-color: var(--primary);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        
+        .tool-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .ai-suggestions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-suggestion {
+            background-color: rgba(108, 99, 255, 0.1);
+            color: var(--secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .ai-suggestion:hover {
+            background-color: rgba(108, 99, 255, 0.2);
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .steps::after {
+                display: none;
+            }
+            
+            .pricing-card, .feature-card {
+                max-width: 100%;
+            }
+            
+            .tool-preview {
+                padding: 1rem;
+            }
+            
+        
+        }
+
+        
+    </style>
+    <style>/* Pricing container and cards positioning */
+        .pricing-container {
+          display: grid;
+          grid-template-columns: repeat(2, 0.4fr); /* Creates two equal columns */
+          gap: 40px; /* Space between cards */
+          max-width: 1200px;
+          margin: 0 50px;
+          padding: 0 20px;
+          margin-left: 300px;
+        }
+        
+        .pricing-card {
+          background-color: #0A0D23;
+          border-radius: 10px;
+          padding: 40px 50px;
+          text-align: left;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          margin: 0 ; /* Override any existing margins */
+        }
+        
+        /* Remove earlier conflicting styles */
+        .pricing-card {
+          margin-right: 10px ; /* Override the 300px margin */
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .pricing-container {
+            grid-template-columns: 1fr; /* Stack vertically on smaller screens */
+          }
+          
+          .pricing-card {
+            margin-bottom: 50px ;
+          }
+        }
+        
+        /* Optional: Add the gradient background effect */
+        .pricing-section {
+          position: relative;
+          padding: 60px 0;
+          overflow: hidden;
+        }
+        
+        .pricing-section::before {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(45deg, rgba(41, 66, 218, 0.2), rgba(41, 66, 218, 0));
+          z-index: 0;
+        }
+        
+        .pricing-container {
+          position: relative;
+          z-index: 1;
+        }</style>
+
+
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0d1121; /* Dark background */
+            color: white;
+            text-align: center;
+        }
+        
+        /* Section Styling */
+        .testimonial-section {
+            padding: 50px 20px;
+        }
+        
+        .testimonial-section h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .testimonial-section p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+        
+        /* Testimonial Container */
+        .testimonial-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Testimonial Cards */
+        .testimonial-card {
+            background-color: #161b30; /* Darker background for cards */
+            padding: 25px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+        
+        .stars {
+            font-size: 20px;
+            color: #f5c518; /* Yellow stars */
+            margin-bottom: 10px;
+        }
+        
+        .testimonial-text {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        /* User Info */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        .user-info h3 {
+            font-size: 16px;
+            margin: 0;
+            color: #fff;
+        }
+        
+        .user-info p {
+            font-size: 14px;
+            color: #aaa;
+            margin: 0;
+        }
+ </style>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #0C0F27;
+        color: white;
+    }
+    .footer {
+        background-color: #0C0F27;
+        padding: 40px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+    .footer-column {
+        margin-bottom: 20px;
+    }
+    .footer-column h3 {
+        margin-bottom: 10px;
+    }
+    .footer-column a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 5px;
+    }
+    .footer-column a:hover {
+        text-decoration: underline;
+    }
+    .social-icons {
+        display: flex;
+        gap: 10px;
+    }
+    .social-icons img {
+        width: 20px;
+        height: 20px;
+    }
+    .footer-bottom {
+        text-align: center;
+        padding: 10px;
+        background-color: #0A0D23;
+    }
+    .badge {
+        background-color: white;
+        color: black;
+        padding: 3px 8px;
+        font-size: 12px;
+        border-radius: 12px;
+        margin-left: 5px;
+    }
+</style>
+
+ 
+
+
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Word<span>GPT</span></div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#blogs">Blog</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="btn">Try for Free</button>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="content-bubbles">
+            <div class="bubble">Articles</div>
+            <div class="bubble">Emails</div>
+            <div class="bubble">Blogs</div>
+            <div class="bubble">Letters</div>
+        </div>
+        <div class="hero-content">
+            <h1>Transform Your Writing Experience with <span class="typewriter">WordGPT</span></h1>
+            <p>The innovative platform that helps you write better articles, blogs, emails, and more, using intelligent AI assistance and intuitive tools.</p>
+            <button class="btn">Start Writing</button>
+        </div>
+    </section>
+    
+    <!-- Interactive Tool Preview -->
+    <div class="tool-preview" style="background-color: #1a1a2e;">
+        <div class="tool-header">
+            <div class="tool-tabs">
+                <div class="tool-tab active">Article</div>
+                <div class="tool-tab">Email</div>
+                <div class="tool-tab">Blog Post</div>
+                <div class="tool-tab">Letter</div>
+            </div>
+        </div>
+        <div class="tool-content">
+            <div class="tool-placeholder">Start writing or choose a template...<span class="tool-cursor"></span></div>
+        </div>
+        <div class="ai-suggestions">
+            <div class="ai-suggestion" style="color: whitesmoke;">Professional tone</div>
+            <div class="ai-suggestion" style="color: whitesmoke;">Creative style</div>
+            <div class="ai-suggestion" style="color: whitesmoke;">Shorten</div>
+            <div class="ai-suggestion" style="color: whitesmoke;">Expand</div>
+        </div>
+        <div class="tool-footer">
+            <button class="btn">AI Assist</button>
+            <button class="btn">Save Draft</button>
+        </div>
+    </div>
+    
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title" style="color: white;">Features That Make Us Unique</h2>
+        <div class="features-grid">
+            <div class="feature-card" style="background-color: #1a1a2e;">
+                <div class="feature-icon">✍️</div>
+                <h3 style="color: #ff6b6b;">Smart Article Writer</h3>
+                <p>Create compelling articles with our AI-powered suggestions tailored to your audience and style preferences.</p>
+            </div>
+            <div class="feature-card" style="background-color: #1a1a2e;">
+                <div class="feature-icon">📧</div>
+                <h3 style="color: #ff6b6b;">Email Composer</h3>
+                <p>Craft professional emails with templates for various scenarios and tone recommendations based on recipients.</p>
+            </div>
+            <div class="feature-card" style="background-color: #1a1a2e;">
+                <div class="feature-icon">📝</div>
+                <h3 style="color: #ff6b6b;">Blog Builder</h3>
+                <p>Design engaging blog posts with SEO optimization, readability analysis, and trending topic suggestions.</p>
+            </div>
+            <div class="feature-card" style="background-color: #1a1a2e;">
+                <div class="feature-icon">💌</div>
+                <h3 style="color: #ff6b6b;">Letter Creator</h3>
+                <p>Write formal and personal letters with proper formatting, tone guidance, and contextual templates.</p>
+            </div>
+            <div class="feature-card" style="background-color: #1a1a2e;">
+                <div class="feature-icon">🔄</div>
+                <h3 style="color: #ff6b6b;">Advanced Rephrasing</h3>
+                <p>Transform your text with multiple style options, sentiment adjustments, and clarity improvements.</p>
+            </div>
+            <div class="feature-card" style="background-color: #1a1a2e;">
+                <div class="feature-icon">📊</div>
+                <h3 style="color: #ff6b6b;">Writing Analytics</h3>
+                <p>Get insights into your writing patterns, readability scores, and engagement predictions.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title" style="color: white;">How WordGPT Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3 style="color: #ff6b6b;">Choose Your Format</h3>
+                <p>Select from articles, blogs, emails, letters, or documents to begin your writing journey.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3 style="color: #ff6b6b;">Start Creating</h3>
+                <p>Write freely with our intuitive editor or choose from our library of templates.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3 style="color: #ff6b6b;">Enhance with AI</h3>
+                <p>Use our smart suggestions to refine your text, fix grammar, and improve readability.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3 style="color: #ff6b6b;">Share Your Work</h3>
+                <p>Export in multiple formats, share directly, or publish to your preferred platforms.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-section" style="text-align: center;">
+        <h1>Simple and Affordable Pricing</h1>
+        <p>Start generating now. No credit card required. Enjoy all the benefits for free.</p>
+        <br>
+        <br>
+
+        <div class="pricing-container">
+            <!-- Free Plan -->
+            <div class="pricing-card" style="background-color: #0A0D23;">
+                <h2>$0/mo</h2>
+                <p class="plan-type">Free</p>
+                <p class="plan-description">Test our pro plan for free.</p>
+                <br>
+                <button class="btn">Start Free Trial</button>
+                <br>
+                <ul>
+                    <li>✔ 20 AI GPT generations</li>
+                    <li>✔ 20,000 FREE AI GPT words</li>
+                    <li>✔ About 50 FREE AI Pages</li>
+                    <li>✔ 10 FREE documents</li>
+                    <li>✔ Full Blog Article Writer</li>
+                    <li>✔ Full Article using URLs writer</li>
+                    <li>✔ Autocomplete paragraph</li>
+                    <li>✔ Rewrite paragraph</li>
+                    <li>✔ Continue story</li>
+                    <li>✔ Generate Paragraph</li>
+                    <li>✔ Different voice Tones</li>
+                </ul>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card" style="background-color: #0A0D23;">
+                <h2>$9.99/mo</h2>
+                <p class="plan-type">Pro</p>
+                <p class="plan-description">Unleash full AI document potential</p>
+                <br>
+                <button class="btn">Pay</button>
+                <br>
+                <ul>
+                    <li>✔ 10,000 AI GPT generations / month</li>
+                    <li>✔ 1M AI GPT words / month</li>
+                    <li>✔ 5,000 AI Pages / month</li>
+                    <li>✔ 100 documents</li>
+                    <li>✔ Full Blog Article Writer</li>
+                    <li>✔ Full Article using URLs writer</li>
+                    <li>✔ Autocomplete paragraph</li>
+                    <li>✔ Rewrite paragraph</li>
+                    <li>✔ Continue story</li>
+                    <li>✔ Generate Paragraph</li>
+                    <li>✔ Different voice Tones</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonial-section" id="testimonial-section" style="text-align: center;" >
+        <h1>What Our Users Say</h1>
+        <p>Our users already enjoy our app. Have a look at what they have to say about it.</p>
+    
+        <div class="testimonial-container">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <p class="stars" style="color: yellow;">★★★★★</p>
+                <p class="testimonial-text">"Our members are so impressed. It's intuitive. It's clean. It helps you deliver content faster."</p>
+                <div class="user-info">
+                    <img src="auth-01.webp" alt="Mitch Kolby">
+                    <div>
+                        <h3>Mitch Kolby</h3>
+                        <p>Editor</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <p class="stars" style="color: yellow;">★★★★★</p>
+                <p class="testimonial-text">"Word GPT Pro helped me write articles faster and cleaner."</p>
+                <div class="user-info">
+                    <img src="auth-02.webp" alt="Kevin Jem">
+                    <div>
+                        <h3>Kevin Jem</h3>
+                        <p>Blog Writer</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <p class="stars" style="color: yellow;">★★★★★</p>
+                <p class="testimonial-text">"It improved my writing skills and helped me to structure my documents."</p>
+                <div class="user-info">
+                    <img src="auth-03.webp" alt="Kendal Banks">
+                    <div>
+                        <h3>Kendal Banks</h3>
+                        <p>Blogger</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="contact-form" style="margin-left: auto; margin-right: auto; margin-top: 100px;">
+        <h1>Let's talk</h1>
+        <p style="font-size: xx-large;">Our team will get back to you ASAP via email.</p>
+    
+        <form action="#" method="POST">
+            <div class="form-group">
+                <div class="input-box">
+                    <label for="name" style="font-size: x-large;">Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required style="width: 600px; height: 50px;">
+                </div>
+                <div class="input-box">
+                    <label for="email" style="font-size: x-large;">Email</label>
+                    <input type="email" id="email" placeholder="john@gmail.com" style="width: 600px; height: 50px;">
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label for="message" style="font-size: x-large;">Message</label>
+                <textarea id="message" placeholder="What do you want to tell us" required style="width: 600px; height: 50px;"></textarea>
+            </div>
+    
+            <div class="form-group">
+                <label style="font-size: x-large;">Challenge</label>
+                <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+            </div>
+    
+            <button type="submit" class="send-btn" style="background-color: #ff6b6b;color: white;font-size: medium;font-style: var(--dark); height: 35px;width: 137px;border:#ff6b6b ;border-radius: 3px;margin-bottom: 20px;">Send Message</button>
+        </form>
+    </div>
+    
+    <footer>
+        <div class="footer">
+            <div class="footer-column">
+                <h3>Word GPT</h3>
+                <p>📧 contact@wordgptpro.com</p>
+                <p>Find us on social media</p>
+                <div class="social-icons">
+                    <img src="facebook.png" alt="Facebook">
+                    <img src="insta.logo.avif" alt="Instagram">
+                    <img src="linkedin.png" alt="LinkedIn">
+                </div>
+                <br>
+                <img src="listmyai.png" alt="Feature on Listmyai" width="150">
+            </div>
+            <div class="footer-column">
+                <h3>Useful Links</h3>
+                <a href="#">Dashboard</a>
+                <a href="#">Register</a>
+                <a href="#">Chatbot Creator <span class="badge">New</span></a>
+            </div>
+            <div class="footer-column">
+                <h3>Terms</h3>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+            <div class="footer-column">
+                <h3>Support & Help</h3>
+                <a href="#">Contact Us</a>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2025 Word AI
+        </div>
+    </footer>
+
+                        
